@@ -1,4 +1,9 @@
-<?php include 'get_site_name.php'; $site_name = getSiteName(); ?>
+<?php include 'get_site_name.php'; $site_name = getSiteName();
+session_start();
+
+$role = $_SESSION['role'];
+
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
@@ -78,7 +83,7 @@
 
             <li class="dropdown me-3">
               <a href="home.php#services" class="fs-5 p-1"><span>التخصصات </span>
-                <i class="bi bi-chevron-down arrow me-2"></i></a>
+               </a>
                <ul>
                 <li><a href="home.php#services"> قسم هندسة الحاسب الآلى</a></li>
                 <li><a href="home.php#services">قسم هندسة علوم المواد  </a></li>
@@ -101,12 +106,38 @@
             <li class="me-3">
               <a class="nav-link scrollto fs-5 p-1" href="index.php#footer">اتصل بنا </a>
             </li>
+<?php
 
-            <li class="me-3">
-                <button onclick="login()" id="login" class="btlogo">
-                <a href="login.php"><span href="" class="my-auto">تسجيل الدخول</span></a>
-              </button>
-            </li>
+if ($role === "admin") {
+    $link = "dashboard.php";
+    $text = "لوحة التحكم";
+} elseif ($role === "teacher") {
+    $link = "teacher_dashboard.php";
+    $text = "لوحة التحكم";
+} elseif ($role === "student") {
+    $link = "student_dashboard.php";
+    $text = "نظام الإدارة";
+} else {
+    $link = "login.php";
+    $text = "تسجيل الدخول";
+}
+?>
+
+<li class="me-3">
+  <a href="<?= $link ?>" class="btlogo d-inline-block px-3 py-2" style="text-decoration: none;">
+    <span class="my-auto">⚙️   <?= $text ?></span>
+  </a>
+</li>
+<?php if ($role): ?>
+<!-- زر تسجيل الخروج -->
+<li class="me-3">
+  <a href="logout.php" class="btlogo d-inline-block px-3 py-2" style="text-decoration: none;">
+    <span class="my-auto">🚪 تسجيل الخروج</span>
+  </a>
+</li>
+<?php endif; ?>
+
+            
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
@@ -118,7 +149,7 @@
     <section
       id="hero"
       class="d-flex flex-column justify-content-end align-items-center"
-      style="margin-top: 70px !important"
+      style="margin-top: 7px !important"
     >
       <div
         class="container-fluid hero-single"
@@ -395,293 +426,7 @@
           </div>
         </div>
       </section>
-      <!-- about2 start -->
-      <!-- End About Section -->
 
-       <!-- sTART NEWS -->
-      <section id="testimonials" class="testimonials mt-5">
-        <div class="container">
-          <div class="section-title text-center aos-init" data-aos="zoom-out" style="font-family: El Messiri sans-serif">
-            <h2>أخر الأخبار</h2>
-          </div>
-          <div class="testimonials-slider swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-rtl swiper-backface-hidden aos-init" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper-wrapper" id="swiper-wrapper-d1619b7982ef8558" aria-live="off" style="transform: translate3d(1514.67px, 0px, 0px); transition-duration: 0ms;"><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0" role="group" aria-label="1 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="attatchments
-                    /146675873455555.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri' ,sans-serif">
-                    اعلان هام 
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>ر</p>
-<div dir="auto">إعلان...</div>
-<div dir="auto">يطلب من السادة المدرجة اسمائهم بالكشف المرفق مراجعة قسم الشؤون الإدارية لأمر يهمهم .</div>
-<div dir="auto">والأمر في غاية الأهمية</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/photo/?fbid=751045793697328&amp;set=a.453468223455088" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri' , sans-serif">المزيد</a>
-                </div>
-              </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="1" role="group" aria-label="2 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/12134327440222.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-02</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.</p>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri' , sans-serif">المزيد</a>
-                </div>
-              </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="2" role="group" aria-label="3 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/879.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    حفل معايدة وزارة التعليم التقني والفني بمناسبة عيد الاضحى المبارك.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><div class="xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a">
-<div dir="auto">منتسبي وزارة التعليم التقني والفني يتبادلون التهاني بمناسبة عيد الإضحى المبارك</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">طرابلس 3 يوليو 2023</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">في أجواء أخوية مفعمة بالمحبة والألفة، تبادل منتسبي وزارة التعليم التقني والفني، صباح اليوم الإثنين، التهاني والتبريكات بمناسبة عيد الأضحى المبارك، بحضور الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، وذلك جرياً على العادة السنوية.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وشهد الحفل الذي أقيم بكلية التقنية الالكترونية طرابلس، حضور وكيل الوزارة لشؤون الديوان والتطوير، "د. الفرجاني أحمد" ومديري الإدارات والمكاتب بديوان الوزارة، كما شارك في حفل المعايدة عدد من عمداء الكليات التقنية، ومدراء المعاهد التقنية العليا.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وفي كلمة له بالمناسبة، قال الدكتور "بن طاهر" إن هذا اليوم يعد بمثابة مساحة للنظر إلى طبيعة النعم التي من حولنا، فالقاؤنا اليوم أكثر من مجرد احتفال أو إجراء شكلي، بل إنه يمثل لحظة للتأمل والتفكير في القيم المشتركة التي توحد مؤسسات الوزارة، مضيفاً أن المناخ العائلي في الوزارة يأتي نتيجة العمل المتواصل والدؤوب للخروج من المسميات المتعارف عليها فيما يتعلق ببيئة العمل التقليدية، وأنه لابد من بذل مزيد من العطاء لرفعة مؤسسات التعليم التقني والفني، وأداء رسالتها المهنية بتخريج كفاءات متدربة لسوق العمل.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وعبر الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، عن بالغ سعادته بهذا اللقاء الذي من شأنه أن يعزز الروابط الإجتماعية والإنسانية بين الوزارة ومنتسبيها، ومن شأنه أن يبث روح المحبة والتواصل فيما بينهم.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">ورفع (الوزير) التهاني والتبريكات بهذه المناسبة إلى عموم الأمة الليبية متمنياً أن يعيده عليهم باليمن والخير والبركة.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">هذا، وتحرص وزارة التعليم التقني والفني على تنظيم هذه الاحتفالية من كل عام، دعماً لمبدأ الترابط والتواصل الداخلي بين أعضاء الهيئتين التدريسية والإدارية، وتعزيز الزمالة المهنية وخلق علاقات متماسكة فيما بينهم تمكّنهم من العمل بروح الفريق الواحد، وتحفيزهم لاستكمال جهودهم الدؤوبة.</div>
-</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri' , sans-serif">المزيد</a>
-                </div>
-              </div>
-              
-              <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="0" role="group" aria-label="1 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/146675873455555.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    اعلان هام 
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>ر</p>
-<div dir="auto">إعلان...</div>
-<div dir="auto">يطلب من السادة المدرجة اسمائهم بالكشف المرفق مراجعة قسم الشؤون الإدارية لأمر يهمهم .</div>
-<div dir="auto">والأمر في غاية الأهمية</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/photo/?fbid=751045793697328&amp;set=a.453468223455088" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div>
-              
-              <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="1" role="group" aria-label="2 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/12134327440222.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-02</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.</p>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div>
-              
-              <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="2" role="group" aria-label="3 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/879.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    حفل معايدة وزارة التعليم التقني والفني بمناسبة عيد الاضحى المبارك.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><div class="xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a">
-<div dir="auto">منتسبي وزارة التعليم التقني والفني يتبادلون التهاني بمناسبة عيد الإضحى المبارك</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">طرابلس 3 يوليو 2023</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">في أجواء أخوية مفعمة بالمحبة والألفة، تبادل منتسبي وزارة التعليم التقني والفني، صباح اليوم الإثنين، التهاني والتبريكات بمناسبة عيد الأضحى المبارك، بحضور الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، وذلك جرياً على العادة السنوية.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وشهد الحفل الذي أقيم بكلية التقنية الالكترونية طرابلس، حضور وكيل الوزارة لشؤون الديوان والتطوير، "د. الفرجاني أحمد" ومديري الإدارات والمكاتب بديوان الوزارة، كما شارك في حفل المعايدة عدد من عمداء الكليات التقنية، ومدراء المعاهد التقنية العليا.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وفي كلمة له بالمناسبة، قال الدكتور "بن طاهر" إن هذا اليوم يعد بمثابة مساحة للنظر إلى طبيعة النعم التي من حولنا، فالقاؤنا اليوم أكثر من مجرد احتفال أو إجراء شكلي، بل إنه يمثل لحظة للتأمل والتفكير في القيم المشتركة التي توحد مؤسسات الوزارة، مضيفاً أن المناخ العائلي في الوزارة يأتي نتيجة العمل المتواصل والدؤوب للخروج من المسميات المتعارف عليها فيما يتعلق ببيئة العمل التقليدية، وأنه لابد من بذل مزيد من العطاء لرفعة مؤسسات التعليم التقني والفني، وأداء رسالتها المهنية بتخريج كفاءات متدربة لسوق العمل.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وعبر الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، عن بالغ سعادته بهذا اللقاء الذي من شأنه أن يعزز الروابط الإجتماعية والإنسانية بين الوزارة ومنتسبيها، ومن شأنه أن يبث روح المحبة والتواصل فيما بينهم.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">ورفع (الوزير) التهاني والتبريكات بهذه المناسبة إلى عموم الأمة الليبية متمنياً أن يعيده عليهم باليمن والخير والبركة.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">هذا، وتحرص وزارة التعليم التقني والفني على تنظيم هذه الاحتفالية من كل عام، دعماً لمبدأ الترابط والتواصل الداخلي بين أعضاء الهيئتين التدريسية والإدارية، وتعزيز الزمالة المهنية وخلق علاقات متماسكة فيما بينهم تمكّنهم من العمل بروح الفريق الواحد، وتحفيزهم لاستكمال جهودهم الدؤوبة.</div>
-</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div>
-                            <!-- End testimonial item -->
-            <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0" role="group" aria-label="1 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/146675873455555.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    اعلان هام 
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>ر</p>
-<div dir="auto">إعلان...</div>
-<div dir="auto">يطلب من السادة المدرجة اسمائهم بالكشف المرفق مراجعة قسم الشؤون الإدارية لأمر يهمهم .</div>
-<div dir="auto">والأمر في غاية الأهمية</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/photo/?fbid=751045793697328&amp;set=a.453468223455088" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="1" role="group" aria-label="2 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/12134327440222.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-02</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><p>2 يوليو 2023 - الدكتور طارق النائلي مدير عام المعهد العالي للعلوم والتقنية رقدالين يتابع اليوم الأحد، سير الامتحانات النهائية لطلبة الفصل الدراسي الربيع 2023.</p>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div><div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="2" role="group" aria-label="3 / 3" style="width: 358.667px; margin-left: 20px;">
-                <div class="testimonial-item">
-                  <div style="overflow: hidden">
-                    <img src="./attatchments/879.jpg" class="img-fluid" alt="">
-                  </div>
-                  <h3 style="font-family: 'El Messiri', sans-serif">
-                    حفل معايدة وزارة التعليم التقني والفني بمناسبة عيد الاضحى المبارك.
-                  </h3>
-                  <small class="text-muted me-4">
-                    <span><i class="bi bi-calendar ms-1"></i>2023-07-03</span>
-                  </small>
-                  <div class="des">
-                  <p class="">
-                    </p><div class="xdj266r x11i5rnm xat24cr x1mh8g0r x1vvkbs x126k92a">
-<div dir="auto">منتسبي وزارة التعليم التقني والفني يتبادلون التهاني بمناسبة عيد الإضحى المبارك</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">طرابلس 3 يوليو 2023</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">في أجواء أخوية مفعمة بالمحبة والألفة، تبادل منتسبي وزارة التعليم التقني والفني، صباح اليوم الإثنين، التهاني والتبريكات بمناسبة عيد الأضحى المبارك، بحضور الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، وذلك جرياً على العادة السنوية.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وشهد الحفل الذي أقيم بكلية التقنية الالكترونية طرابلس، حضور وكيل الوزارة لشؤون الديوان والتطوير، "د. الفرجاني أحمد" ومديري الإدارات والمكاتب بديوان الوزارة، كما شارك في حفل المعايدة عدد من عمداء الكليات التقنية، ومدراء المعاهد التقنية العليا.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وفي كلمة له بالمناسبة، قال الدكتور "بن طاهر" إن هذا اليوم يعد بمثابة مساحة للنظر إلى طبيعة النعم التي من حولنا، فالقاؤنا اليوم أكثر من مجرد احتفال أو إجراء شكلي، بل إنه يمثل لحظة للتأمل والتفكير في القيم المشتركة التي توحد مؤسسات الوزارة، مضيفاً أن المناخ العائلي في الوزارة يأتي نتيجة العمل المتواصل والدؤوب للخروج من المسميات المتعارف عليها فيما يتعلق ببيئة العمل التقليدية، وأنه لابد من بذل مزيد من العطاء لرفعة مؤسسات التعليم التقني والفني، وأداء رسالتها المهنية بتخريج كفاءات متدربة لسوق العمل.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">وعبر الدكتور "طاهر بن طاهر"، وزير التعليم التقني والفني (المكلف)، عن بالغ سعادته بهذا اللقاء الذي من شأنه أن يعزز الروابط الإجتماعية والإنسانية بين الوزارة ومنتسبيها، ومن شأنه أن يبث روح المحبة والتواصل فيما بينهم.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">ورفع (الوزير) التهاني والتبريكات بهذه المناسبة إلى عموم الأمة الليبية متمنياً أن يعيده عليهم باليمن والخير والبركة.</div>
-</div>
-<div class="x11i5rnm xat24cr x1mh8g0r x1vvkbs xtlvy1s x126k92a">
-<div dir="auto">هذا، وتحرص وزارة التعليم التقني والفني على تنظيم هذه الاحتفالية من كل عام، دعماً لمبدأ الترابط والتواصل الداخلي بين أعضاء الهيئتين التدريسية والإدارية، وتعزيز الزمالة المهنية وخلق علاقات متماسكة فيما بينهم تمكّنهم من العمل بروح الفريق الواحد، وتحفيزهم لاستكمال جهودهم الدؤوبة.</div>
-</div>
-                  <p></p>
-                  </div>
-                 <a href="https://www.facebook.com/tve.gov" class="btn btn-secondary py-1 px-3 mb-3  slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">المزيد</a>
-                </div>
-              </div></div>
-            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 2" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span></div>
-          <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-        </div>
-      </section>
-      <!-- END NEWS -->
-
-      <!-- joornal start -->
-<section class="mb-5 aos-init aos-animate" data-aos="fade-up">
-        <div class="section-title text-center mt-5 aos-init aos-animate" data-aos="zoom-out" style="font-family: El Messiri ,sans-serif">
-          
-          <h2>المجلة العلمية</h2>
-        </div>
-        <div class="container">
-          <div class="row mb-3 justify-content-center text-center" style="color: white">
-          <div class="col-md-3 mx-auto">
-            <div class="card">
-                <img src="./attatchments
-                /journal.jpg" alt="" class="img-fluid">
-            </div>
-          </div>
-          <div>
-            <a href="https://www.histr.ly/journal.php" class="btn btn-secondary py-1 px-3 mb-3 mt-4 slideInDown bg-gradient" style="font-family: 'El Messiri', sans-serif">الإنتقال للمجلة</a>
-          </div>
-        </div>
-        </div>
-      </section>
-<!-- journal end -->
        
       <!-- ======= counters Section ======= -->
 
@@ -963,10 +708,7 @@
                       </div>
         </div>
         <div class="row pricing">
-          <div class="btn-wrap">
-            <a href="https://www.histr.ly/The_electronic_library.php" class="btn-buy fs-5" style="font-family: El Messiri, sans-serif">
-              المزيد</a>
-          </div>
+         
         </div>
       </section>
       <!-- End books Section  -->

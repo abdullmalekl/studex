@@ -9,9 +9,9 @@ $role = $_SESSION['role'];
 if ($role === 'admin') {
     header("Location: dashboard.php");
 } elseif ($role === 'student') {
-    header("Location: student_home.php");
+    header("Location: home.php");
 } elseif ($role === 'teacher') {
-    header("Location: teacher_home.php");
+    header("Location: teacher_dashboard.php");
 } else {
     header("Location: home.php");
 }
