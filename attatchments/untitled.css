@@ -1,0 +1,158 @@
+:root {
+  --primary: #263f5b;
+  --secondary: #5394bc;
+  --tertiary: #f0f0f0;
+  --light: #ece8d9;
+  --dark: #00204a;
+  --red: #991010;
+}
+/* ahmed */
+.font span {
+  font-size: 20px !important;
+}
+.logbtn2 {
+  background-color: var(--primary);
+  color: white;
+}
+.logbtn2 :hover {
+  background-color: var(--secondary) !important;
+}
+/* ahmed */
+
+.o-hidden.card-login {
+  margin: 0;
+  top: 40%;
+  right: 50%;
+  -ms-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+}
+.image-motion img {
+   background-size: cover;
+  transition: all ease-in-out 0.3s;
+}
+.image-motion:hover img {
+   background-size: cover;
+  transform: scale(1.05);
+  opacity: 0.5;
+}
+
+@media (min-width: 300px) {
+  .o-hidden.card-login {
+    /*width: 90%;*/
+    margin: 10px;
+  }
+}
+.navbar-nav .nav-item .nav-link a {
+  transition: all ease-in-out 0.3s !important;
+}
+.navbar-nav .nav-item .nav-link a:hover {
+  transform: scale(1.5) !important;
+}
+.col-login {
+}
+
+@media (min-width: 992px) {
+  .bg-login-image {
+    height: 450px;
+  }
+}
+
+@media (min-width: 992px) {
+  .log-form-container {
+    padding-top: 50px;
+  }
+}
+
+.dropdown-header-text {
+  font-size: 1rem;
+}
+
+#dropdown-header-text {
+  font-size: 1rem;
+  text-align: center;
+}
+.dropdown-item {
+  transition: all ease-in-out 0.4s;
+}
+.dropdown-item:hover {
+  transform: scale(1.1);
+  background-color: #263f5b;
+  color: white;
+}
+.sidebar-brand-text span {
+  transition: all ease-in-out 0.3s !important;
+}
+.sidebar-brand-text:hover span {
+  color: rgb(28, 200, 138) !important;
+}
+.prof .card {
+  transition: all ease-in-out 0.3s;
+}
+.prof:hover .card {
+  transform: scale(1.05);
+  box-shadow: 3px 4px 7px 0px #98a7d2;
+}
+.prof .card img {
+   background-size: cover;
+  transition: all ease-in-out 0.3s;
+}
+.prof .card img:hover {
+  opacity: 0.6;
+}
+.card {
+  transition: all ease-in-out 0.3s;
+}
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 3px 4px 7px 0px #98a7d2 !important;
+}
+.btn-xl {
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  width: 50%;
+}
+@media (max-width: 1250px) {
+  body,
+  .btn {
+    font-size: 16px !important;
+  }
+}
+@media (max-width: 992px) {
+  body {
+    font-size: 12px !important;
+  }
+  .btn {
+    font-size: 12px !important;
+  }
+}
+@media (max-width: 400px) {
+  body {
+    font-size: 0.91rem !important;
+  }
+  .btn {
+    font-size: 1rem !important;
+    padding: 7px;
+    width: max-content;
+  }
+  .btn-link {
+    font-size: 16px !important;
+  }
+  .txt {
+    font-size: 1.1rem !important;
+  }
+  .bsm {
+    scale: 0.6;
+  }
+  .nav-link span {
+    font-size: 12px !important;
+  }
+  .log-form-container {
+    width: 75%;
+    height: 75%;
+  }
+}
+
+.editableColumnsStyle {
+  width: max-content;
+}

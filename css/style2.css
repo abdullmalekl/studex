@@ -1,0 +1,504 @@
+/* General Body and HTML Styles */
+html {
+    direction: rtl; /* Set overall direction to Right-to-Left for Arabic */
+    text-align: right; /* Align text to the right by default */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A clear, readable font */
+    background-color: #f8f9fa; /* Light background for the whole page */
+    margin: 0;
+    padding: 0;
+}
+
+/* Custom Scrollbar (optional - for modern browsers) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Navbar Customization */
+.navbar-custom {
+    background-color: #007bff; /* Primary blue color for navbar */
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: #fff !important; /* White text for brand */
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: #e9ecef !important; /* Lighter white for nav links */
+    font-weight: 500;
+    margin-right: 15px; /* Space between nav items in RTL */
+    margin-left: 0; /* Override default LTR margin */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.dropdown-menu-custom {
+    background-color: #007bff;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu-custom .dropdown-item {
+    color: #e9ecef;
+    padding: 10px 20px;
+}
+
+.dropdown-menu-custom .dropdown-item:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #fff;
+}
+
+.dropdown-menu-custom .dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Main Layout Structure */
+.main-layout {
+    min-height: calc(100vh - 60px); /* Adjust based on your footer/navbar height */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Sidebar Customization */
+.sidebar {
+    background-color: #343a40; /* Dark grey for sidebar */
+    color: #f8f9fa;
+    height: 100vh; /* Full height of the viewport */
+    position: sticky;
+    top: 0;
+    padding-top: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .position-sticky {
+    height: calc(100vh - 30px); /* Adjust for padding */
+    overflow-y: auto; /* Enable scrolling for long content */
+}
+
+.sidebar-title {
+    color: #6c757d; /* Lighter grey for title */
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-bottom: 1px solid #495057;
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.sidebar-title i {
+    margin-left: 8px; /* Space between icon and text */
+}
+
+.sidebar .nav-item .nav-link {
+    color: #adb5bd; /* Light grey for sidebar links */
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    border-right: 4px solid transparent; /* Border for active/hover */
+    transition: all 0.3s ease;
+    text-align: right;
+}
+
+.sidebar .nav-item .nav-link i {
+    margin-left: 10px; /* Space between icon and text in RTL */
+    font-size: 1.1rem;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    color: #fff;
+    background-color: #495057;
+    border-right-color: #007bff; /* Blue border on hover */
+}
+
+.sidebar .nav-item .nav-link.active {
+    color: #fff;
+    background-color: #007bff; /* Blue background for active link */
+    border-right-color: #fff; /* White border for active link */
+    font-weight: bold;
+}
+
+/* Main Content Area */
+.main-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #343a40;
+    margin-bottom: 1rem;
+    text-align: right; /* Ensure headers are right-aligned */
+}
+
+/* Breadcrumb Customization */
+.breadcrumb-custom {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox for alignment */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: flex-end; /* Align to the right for RTL */
+}
+
+.breadcrumb-custom .breadcrumb-item {
+    direction: rtl; /* Ensure item content is RTL */
+}
+
+.breadcrumb-custom .breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 5px; /* Space after link in RTL */
+}
+
+.breadcrumb-custom .breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-custom .breadcrumb-item.active {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+.breadcrumb-custom .breadcrumb-item i {
+    margin-left: 5px; /* Space between icon and text */
+}
+
+/* Table Customization */
+.table-responsive-custom {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.table-custom {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse; /* Ensure borders collapse */
+}
+
+.table-custom thead th {
+    background-color: #007bff; /* Header background */
+    color: #fff; /* Header text color */
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px 15px;
+    text-align: right; /* Align header text to the right */
+    vertical-align: middle;
+}
+
+.table-custom tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table-custom tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2; /* Zebra striping */
+}
+
+.table-custom tbody tr:hover {
+    background-color: #e9ecef; /* Hover effect for rows */
+}
+
+.table-custom tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+    text-align: right; /* Align cell text to the right */
+}
+
+.action-buttons {
+    white-space: nowrap; /* Keep buttons on one line */
+}
+
+.action-buttons .btn {
+    margin-right: 5px; /* Space between action buttons in RTL */
+    margin-left: 0;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+/* "No Data" Message */
+.no-data-message {
+    text-align: center;
+    padding: 30px;
+    background-color: #fefefe;
+    border: 1px dashed #ced4da;
+    border-radius: 8px;
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+    text-align: right; /* Align labels to the right */
+}
+
+.form-group label {
+    display: block; /* Make label take full width above input */
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-align: right; /* Ensure input text is right-aligned */
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-check {
+    padding-right: 1.5em; /* Space for checkbox in RTL */
+    padding-left: 0; /* Reset default LTR padding */
+    text-align: right;
+}
+
+.form-check-input {
+    float: right; /* Float checkbox to the right in RTL */
+    margin-right: -1.5em; /* Adjust margin for positioning */
+    margin-left: 0; /* Reset default LTR margin */
+}
+
+.form-check-label {
+    text-align: right;
+    margin-right: 1.5em; /* Adjust label position */
+    margin-left: 0;
+}
+
+/* Custom Button Styles (Save/Cancel/Add New) */
+
+/* General Button for Adding New Items (e.g., Add New Subject, Add New Teacher) */
+.btn-add-new-subject, .btn-add-new-teacher {
+    background-color: #28a745; /* Green for add buttons */
+    border-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-decoration: none; /* For <a> tags */
+    display: inline-block; /* For <a> tags to behave like buttons */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-add-new-subject:hover, .btn-add-new-teacher:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    color: white; /* Ensure text remains white on hover */
+}
+
+.btn-add-new-subject i, .btn-add-new-teacher i {
+    margin-left: 8px; /* Space between icon and text in RTL */
+}
+
+/* Specific styles for Save/Cancel/Back buttons within forms */
+.btn-group {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    justify-content: flex-end; /* Align buttons to the left in RTL if not enough space */
+    margin-top: 20px; /* Space above button group */
+    width: 100%; /* Ensure group takes full width for alignment */
+}
+
+.btn-save, .btn-save-teacher {
+    background-color: #007bff; /* Blue for Save */
+    border-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+.btn-save:hover, .btn-save-teacher:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: white;
+}
+
+.btn-save:active, .btn-save-teacher:active {
+    background-color: #004085 !important;
+    border-color: #004085 !important;
+}
+
+.btn-cancel, .btn-back-list {
+    background-color: #6c757d; /* Grey for Cancel/Back */
+    border-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    text-decoration: none; /* For <a> tags */
+}
+
+.btn-cancel:hover, .btn-back-list:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    color: white;
+}
+
+.btn-cancel:active, .btn-back-list:active {
+    background-color: #4e555b !important;
+    border-color: #4e555b !important;
+}
+
+
+/* Alerts Customization */
+.alert {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 1rem 1.25rem;
+    border-radius: 0.25rem;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert .btn-close {
+    background: none;
+    border: none;
+    opacity: 1;
+    font-size: 1.2rem;
+    color: inherit;
+    margin-left: 1rem; /* Space from text in RTL */
+    margin-right: 0;
+    float: left; /* Align close button to the left in RTL */
+    filter: invert(100%); /* Invert color to make it visible on colored background */
+    width: 1em; /* Adjust size */
+    height: 1em;
+    padding: 0;
+    line-height: 1;
+}
+
+/* Footer Customization */
+.footer-copyright {
+    background-color: #343a40; /* Dark grey, matching sidebar */
+    color: #f8f9fa;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-copyright i {
+    color: #dc3545; /* Red heart icon */
+    margin: 0 5px;
+}
+
+/* Utility Classes (if needed) */
+.text-center {
+    text-align: center;
+}
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+.mt-3 {
+    margin-top: 1rem !important;
+}
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative; /* Remove sticky on small screens */
+        height: auto; /* Allow height to adjust */
+        width: 100%; /* Full width */
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .main-layout .row {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+    .main-content {
+        width: 100%; /* Full width for main content */
+        margin-left: 0 !important; /* Reset ml-sm-auto */
+    }
+    .navbar-toggler {
+        display: block; /* Ensure toggler is visible */
+    }
+    .navbar-collapse {
+        order: 1; /* Place collapse below toggler */
+    }
+    .navbar-nav .nav-link {
+        margin-right: 0; /* Remove horizontal margin for stacked links */
+    }
+    .breadcrumb-custom {
+        justify-content: flex-start; /* Align breadcrumbs to start on small screens */
+    }
+    .btn-group {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: stretch; /* Make buttons fill the width */
+    }
+    .btn-group .btn, .btn-group a.btn {
+        width: 100%; /* Ensure full width on small screens when stacked */
+        margin: 5px 0; /* Adjust vertical margin */
+    }
+}
