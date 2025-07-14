@@ -133,7 +133,7 @@ $classes = $conn->query("SELECT * FROM classes ORDER BY class_id");
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>

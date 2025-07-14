@@ -68,7 +68,7 @@ angle❌ حدث خطأ أثناء حذف الفصل الدراسي: " . $stmt->e
 }
 
 // جلب جميع الفصول الدراسية
-$semesters_query = $conn->query("SELECT s.*, t.name as term_name FROM Semesters s LEFT JOIN terms t ON s.terms = t.term_id ORDER BY s.start_date DESC");
+$semesters_query = $conn->query("SELECT s.*, t.name as term_name FROM Semesters s LEFT JOIN terms t ON s.terms = t.term_id ORDER BY s.start_date ASC");
 
 // جلب الفترات الدراسية لملء القائمة المنسدلة
 $terms = $conn->query("SELECT term_id, name FROM terms ORDER BY name");
@@ -148,7 +148,7 @@ $terms = $conn->query("SELECT term_id, name FROM terms ORDER BY name");
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -195,8 +195,8 @@ $terms = $conn->query("SELECT term_id, name FROM terms ORDER BY name");
                 <form method="POST">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">اسم الفصل الدراسي</label>
-                            <input type="text" name="name" class="form-control" required>
+                            <label class="form-label"> السنة الدراسية </label>
+                            <input type="number" name="name" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">تاريخ البدء</label>
@@ -234,21 +234,39 @@ $terms = $conn->query("SELECT term_id, name FROM terms ORDER BY name");
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>اسم الفصل</th>
-                                <th>تاريخ البدء</th>
-                                <th>تاريخ الانتهاء</th>
-                                <th>الفترة الدراسية</th>
+                                <th>مدة الفصل</th>
+                                <th>الفترة الدراسية </th>
                                 <th>الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php while($semester = $semesters_query->fetch_assoc()): ?>
                             <tr>
-                                <td><?= htmlspecialchars($semester['semester_id']) ?></td>
-                                <td><?= htmlspecialchars($semester['name']) ?></td>
-                                <td><?= htmlspecialchars($semester['start_date']) ?></td>
-                                <td><?= htmlspecialchars($semester['end_date']) ?></td>
-                                <td><?= htmlspecialchars($semester['term_name'] ?? 'غير محدد') ?></td>
+                      <td><?= htmlspecialchars($semester['semester_id']) ?></td>
+
+    <!-- عمود مدة الفصل -->
+    <td>
+        <?php
+            if (!empty($semester['start_date']) && !empty($semester['end_date'])) {
+                $start = new DateTime($semester['start_date']);
+                $end = new DateTime($semester['end_date']);
+                $diff = $start->diff($end);
+
+                $totalMonths = ($diff->y * 12) + $diff->m;
+
+                echo $totalMonths . " شهر";
+            } else {
+                echo "غير متوفرة";
+            }
+        ?>
+    </td>
+
+    <!-- عمود الفترة الدراسية -->
+    <td>
+        <?= htmlspecialchars($semester['term_name'] ?? 'غير محدد') . ' ' . htmlspecialchars($semester['name']) ?>
+    </td>
+
+
                                 <td>
                                     <div class="btn-group" role="group">
                                         <!-- تعديل -->
@@ -275,8 +293,8 @@ $terms = $conn->query("SELECT term_id, name FROM terms ORDER BY name");
                                                     <div class="modal-body">
                                                         <input type="hidden" name="semester_id" value="<?= $semester['semester_id'] ?>">
                                                         <div class="mb-3">
-                                                            <label class="form-label">اسم الفصل الدراسي</label>
-                                                            <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($semester['name']) ?>" required>
+                                                            <label class="form-label">السنة الدراسية</label>
+                                                            <input type="number" name="name" class="form-control" value="<?= htmlspecialchars($semester['name']) ?>" required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">تاريخ البدء</label>

@@ -22,11 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_subject"])) {
     $stmt->bind_param("siiiii", $name, $credit_hours, $num_units, $status, $sem_id, $deprt_id);
 
     if ($stmt->execute()) {
-        $message = "<div class=\'alert alert-success\
-angle✅ تم إضافة المادة بنجاح!</div>";
+        $message = "<div class='alert alert-success'>✅ تم إضافة المادة بنجاح!</div>";
     } else {
-        $message = "<div class=\'alert alert-danger\
-angle❌ حدث خطأ أثناء إضافة المادة: " . $stmt->error . "</div>";
+        $message = "<div class='alert alert-danger'>❌ حدث خطأ أثناء إضافة المادة: " . $stmt->error . "</div>";
     }
     $stmt->close();
 }
@@ -45,11 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["edit_subject"])) {
     $stmt->bind_param("siiiiii", $name, $credit_hours, $num_units, $status, $sem_id, $deprt_id, $subject_id);
 
     if ($stmt->execute()) {
-        $message = "<div class=\'alert alert-success\
-angle✅ تم تعديل المادة بنجاح!</div>";
+        $message = "<div class='alert alert-success'>✅ تم تعديل المادة بنجاح!</div>";
     } else {
-        $message = "<div class=\'alert alert-danger\
-angle❌ حدث خطأ أثناء تعديل المادة: " . $stmt->error . "</div>";
+        $message = "<div class='alert alert-danger'>❌ حدث خطأ أثناء تعديل المادة: " . $stmt->error . "</div>";
     }
     $stmt->close();
 }
@@ -58,24 +54,48 @@ angle❌ حدث خطأ أثناء تعديل المادة: " . $stmt->error . "<
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_subject"])) {
     $subject_id = $_POST["subject_id"];
 
-    $stmt = $conn->prepare("DELETE FROM Subjects WHERE subject_id = ?");
-    $stmt->bind_param("i", $subject_id);
+    // Start transaction
+    $conn->begin_transaction();
 
-    if ($stmt->execute()) {
-        $message = "<div class=\'alert alert-success\
-angle✅ تم حذف المادة بنجاح!</div>";
-    } else {
-        $message = "<div class=\'alert alert-danger\
-angle❌ حدث خطأ أثناء حذف المادة: " . $stmt->error . "</div>";
+    try {
+        // Delete related records from 'enrollment\' table first
+        $stmt_enrollment = $conn->prepare("DELETE FROM enrollment WHERE sbjct_id = ?");
+        $stmt_enrollment->bind_param("i", $subject_id);
+        $stmt_enrollment->execute();
+        $stmt_enrollment->close();
+
+        // Delete related records from \'results\' table (if any)
+        $stmt_results = $conn->prepare("DELETE FROM results WHERE sbjct_id = ?");
+        $stmt_results->bind_param("i", $subject_id);
+        $stmt_results->execute();
+        $stmt_results->close();
+
+        // Delete related records from \'lectures\' table (if any)
+        $stmt_lectures = $conn->prepare("DELETE FROM lectures WHERE sbjct_id = ?");
+        $stmt_lectures->bind_param("i", $subject_id);
+        $stmt_lectures->execute();
+        $stmt_lectures->close();
+
+        // Now delete the subject
+        $stmt_subject = $conn->prepare("DELETE FROM Subjects WHERE subject_id = ?");
+        $stmt_subject->bind_param("i", $subject_id);
+        $stmt_subject->execute();
+        $stmt_subject->close();
+
+        $conn->commit();
+        $message = "<div class='alert alert-success'>✅ تم حذف المادة وجميع السجلات المرتبطة بها بنجاح!</div>";
+    } catch (mysqli_sql_exception $e) {
+        $conn->rollback();
+        $message = "<div class='alert alert-danger'>❌ حدث خطأ أثناء حذف المادة: " . $e->getMessage() . "</div>";
     }
-    $stmt->close();
 }
 
 // جلب جميع المواد
-$subjects_query = $conn->query("SELECT s.*, sem.name as semester_name, dep.name as department_name FROM Subjects s LEFT JOIN Semesters sem ON s.sem_id = sem.semester_id LEFT JOIN Departments dep ON s.department_id = dep.department_id ORDER BY s.name");
+// جلب جميع المواد
+$subjects_query = $conn->query("SELECT s.*, sem.name as semester_name, t.name as term_name, dep.name as department_name FROM Subjects s LEFT JOIN Semesters sem ON s.sem_id = sem.semester_id LEFT JOIN Terms t ON sem.terms = t.term_id LEFT JOIN Departments dep ON s.department_id = dep.department_id ORDER BY s.name");
 
 // جلب الفصول الدراسية والأقسام لملء القوائم المنسدلة
-$semesters = $conn->query("SELECT semester_id, name FROM Semesters ORDER BY name");
+$semesters_query = $conn->query("SELECT s.semester_id, s.name AS semester_name, t.name AS term_name FROM Semesters s JOIN Terms t ON s.terms = t.term_id ORDER BY s.name");
 $departments = $conn->query("SELECT department_id, name FROM Departments ORDER BY name");
 
 ?>
@@ -89,7 +109,7 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
     <link href="attatchments/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f8f9fa;
             direction: rtl;
             margin: 0;
@@ -152,7 +172,7 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -172,6 +192,7 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
             <div class="nav-item active">
                 <a href="subjects.php">📖 المواد</a>
             </div>
+            
             <div class="nav-item">
                 <a href="admin_users_management.php">👤 إدارة المستخدمين</a>
             </div>
@@ -181,6 +202,9 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                  <div class="nav-item">
         <a href="admin_site_settings.php">⚙️ إعدادات الموقع</a>
     </div>
+     <div class="nav-item">
+            <a href="user_profile.php">👤 الملف الشخصي</a>
+        </div>
             <div class="nav-item">
                 <a href="logout.php">🚪 تسجيل الخروج</a>
             </div>
@@ -214,8 +238,8 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                             <label class="form-label">الفصل الدراسي</label>
                             <select name="sem_id" class="form-control" required>
                                 <option value="">اختر الفصل الدراسي</option>
-                                <?php while($sem = $semesters->fetch_assoc()): ?>
-                                    <option value="<?= $sem['semester_id'] ?>"><?= htmlspecialchars($sem['name']) ?></option>
+                                <?php while($sem = $semesters_query->fetch_assoc()): ?>
+                                    <option value="<?= $sem["semester_id"] ?>"><?= htmlspecialchars($sem["term_name"]) . ' ' . htmlspecialchars($sem["semester_name"]) ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -224,7 +248,7 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                             <select name="deprt_id" class="form-control" required>
                                 <option value="">اختر القسم</option>
                                 <?php while($dep = $departments->fetch_assoc()): ?>
-                                    <option value="<?= $dep['department_id'] ?>"><?= htmlspecialchars($dep['name']) ?></option>
+                                    <option value="<?= $dep["department_id"] ?>"><?= htmlspecialchars($dep["name"]) ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -264,29 +288,29 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                             <?php if ($subjects_query->num_rows > 0): ?>
                                 <?php while($subject = $subjects_query->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($subject['subject_id']) ?></td>
-                                    <td><?= htmlspecialchars($subject['name']) ?></td>
-                                    <td><?= htmlspecialchars($subject['credit_hours']) ?></td>
-                                    <td><?= htmlspecialchars($subject['units_count']) ?></td>
-                                    <td><?= $subject['status'] ? 'مفعلة' : 'غير مفعلة' ?></td>
-                                    <td><?= htmlspecialchars($subject['semester_name'] ?? 'غير محدد') ?></td>
-                                    <td><?= htmlspecialchars($subject['department_name'] ?? 'غير محدد') ?></td>
+                                    <td><?= htmlspecialchars($subject["subject_id"]) ?></td>
+                                    <td><?= htmlspecialchars($subject["name"]) ?></td>
+                                    <td><?= htmlspecialchars($subject["credit_hours"]) ?></td>
+                                    <td><?= htmlspecialchars($subject["units_count"]) ?></td>
+                                    <td><?= $subject["status"] ? 'مفعلة' : 'غير مفعلة' ?></td>
+                                      <td><?= htmlspecialchars($subject["term_name"] ?? 'غير محدد') . ' ' . htmlspecialchars($subject["semester_name"] ?? 'غير محدد') ?></td>
+                                    <td><?= htmlspecialchars($subject["department_name"] ?? 'غير محدد') ?></td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <!-- تعديل -->
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editSubjectModal<?= $subject['subject_id'] ?>">
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editSubjectModal<?= $subject["subject_id"] ?>">
                                                 ✏️ تعديل
                                             </button>
                                             
                                             <!-- حذف -->
                                             <form method="POST" style="display: inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذه المادة؟')">
-                                                <input type="hidden" name="subject_id" value="<?= $subject['subject_id'] ?>">
+                                                <input type="hidden" name="subject_id" value="<?= $subject["subject_id"] ?>">
                                                 <button type="submit" name="delete_subject" class="btn btn-danger btn-sm">🗑️ حذف</button>
                                             </form>
                                         </div>
 
                                         <!-- Modal للتعديل -->
-                                        <div class="modal fade" id="editSubjectModal<?= $subject['subject_id'] ?>" tabindex="-1">
+                                        <div class="modal fade" id="editSubjectModal<?= $subject["subject_id"] ?>" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -295,28 +319,28 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                                                     </div>
                                                     <form method="POST">
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="subject_id" value="<?= $subject['subject_id'] ?>">
+                                                            <input type="hidden" name="subject_id" value="<?= $subject["subject_id"] ?>">
                                                             <div class="mb-3">
                                                                 <label class="form-label">اسم المادة</label>
-                                                                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($subject['name']) ?>" required>
+                                                                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($subject["name"]) ?>" required>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">عدد الساعات المعتمدة</label>
-                                                                <input type="number" name="credit_hours" class="form-control" value="<?= htmlspecialchars($subject['credit_hours']) ?>" required>
+                                                                <input type="number" name="credit_hours" class="form-control" value="<?= htmlspecialchars($subject["credit_hours"]) ?>" required>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">عدد الوحدات</label>
-                                                                <input type="number" name="num_units" class="form-control" value="<?= htmlspecialchars($subject['units_count']) ?>" required>
+                                                                <input type="number" name="num_units" class="form-control" value="<?= htmlspecialchars($subject["units_count"]) ?>" required>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">الفصل الدراسي</label>
                                                                 <select name="sem_id" class="form-control" required>
                                                                     <option value="">اختر الفصل الدراسي</option>
                                                                     <?php 
-                                                                    $semesters->data_seek(0);
-                                                                    while($sem = $semesters->fetch_assoc()): 
+                                                                    $semesters_query->data_seek(0);
+                                                                    while($sem = $semesters_query->fetch_assoc()): 
                                                                     ?>
-                                                                        <option value="<?= $sem['semester_id'] ?>" <?= $subject['sem_id'] == $sem['semester_id'] ? 'selected' : '' ?>><?= htmlspecialchars($sem['name']) ?></option>
+                                                                        <option value="<?= $sem["semester_id"] ?>" <?= $subject["sem_id"] == $sem["semester_id"] ? 'selected' : '' ?>><?= htmlspecialchars($sem["term_name"]) . ' ' . htmlspecialchars($sem["semester_name"]) ?></option>
                                                                     <?php endwhile; ?>
                                                                 </select>
                                                             </div>
@@ -328,13 +352,13 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
                                                                     $departments->data_seek(0);
                                                                     while($dep = $departments->fetch_assoc()): 
                                                                     ?>
-                                                                        <option value="<?= $dep['department_id'] ?>" <?= $subject['department_id'] == $dep['department_id'] ? 'selected' : '' ?>><?= htmlspecialchars($dep['name']) ?></option>
+                                                                        <option value="<?= $dep["department_id"] ?>" <?= $subject["department_id"] == $dep["department_id"] ? 'selected' : '' ?>><?= htmlspecialchars($dep["name"]) ?></option>
                                                                     <?php endwhile; ?>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3 form-check">
-                                                                <input type="checkbox" name="status" class="form-check-input" id="editSubjectStatus<?= $subject['subject_id'] ?>" <?= $subject['status'] ? 'checked' : '' ?>>
-                                                                <label class="form-check-label" for="editSubjectStatus<?= $subject['subject_id'] ?>">مفعلة</label>
+                                                                <input type="checkbox" name="status" class="form-check-input" id="editSubjectStatus<?= $subject["subject_id"] ?>" <?= $subject["status"] ? 'checked' : '' ?>>
+                                                                <label class="form-check-label" for="editSubjectStatus<?= $subject["subject_id"] ?>">مفعلة</label>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -363,4 +387,3 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
     <script src="attatchments/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

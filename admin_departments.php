@@ -144,7 +144,7 @@ $departments = $conn->query("SELECT * FROM departments ORDER BY department_id");
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -170,6 +170,7 @@ $departments = $conn->query("SELECT * FROM departments ORDER BY department_id");
             <div class="nav-item">
                 <a href="admin_announcements.php">📢 إدارة الإعلانات</a>
             </div>
+              
                  <div class="nav-item">
         <a href="admin_site_settings.php">⚙️ إعدادات الموقع</a>
     </div>

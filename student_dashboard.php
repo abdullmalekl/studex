@@ -21,55 +21,99 @@ $student_id = $_SESSION['user_id'];
 </head>
 <body>
 
-<?php include 'navbar.php'; ?>
+    <link href="attatchments/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            direction: rtl;
+            margin: 0;
+            padding-top: 80px;
+        }
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1b325f;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0 20px;
+        }
+        .nav-item {
+            background: #2c477a;
+            border-radius: 6px;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background: #3c5a9a;
+            transform: translateY(-2px);
+        }
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .nav-item.active {
+            background: #0d6efd;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: #1b325f;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+    </style>
+
+    <!-- الشريط العلوي -->
+    <div class="top-navbar">
+        <div class="nav-menu">
+            <div class="nav-item">
+                <a href="index.php">🏠 الرئيسية</a>
+            </div>
+            <div class="nav-item active">
+                <a href="semesters_profile.php">📚 الفصول الدراسية</a>
+            </div>
+            <div class="nav-item">
+                <a href="subjects_assighn.php">📖 تنزيل مواد</a>
+            </div>
+            <div class="nav-item">
+                <a href="student_timetable.php">📅 الجدول الدراسي</a>
+            </div>
+            <div class="nav-item">
+                <a href="results_display.php">📅 عرض النتيجة</a>
+            </div>
+        <div class="nav-item">
+            <a href="user_profile.php">👤 الملف الشخصي</a>
+        </div>
+            <div class="nav-item">
+                <a href="logout.php">🚪 تسجيل الخروج</a>x
+            </div>
+        </div>
+    </div>
+
 
 <div class="container-fluid main-layout">
   <div class="row w-100 h-100 g-0">
 
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-      <div class="position-sticky pt-3 d-flex flex-column align-items-center w-100">
-        <h5 class="sidebar-title">
-          <i class="fas fa-university"></i> المعهد العالي
-        </h5>
-        <p class="text-white text-center small px-2">مرحبًا بك في نظام إدارة المواد. يمكنك من خلال هذا النظام إدارة جدولك الدراسي، متابعة الإعلانات، وتنزيل المواد.</p>
-
-        <ul class="nav flex-column w-100">
-          <li class="nav-item">
-            <a class="nav-link active" href="student_home.php">
-              <i class="fas fa-home"></i>
-              الرئيسية
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#subjectsMenu" role="button" aria-expanded="false" aria-controls="subjectsMenu">
-              <i class="fas fa-book"></i>
-              المواد <i class="fas fa-chevron-down float-end"></i>
-            </a>
-            <div class="collapse" id="subjectsMenu">
-              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="view_subjects.php" class="nav-link">المواد التي تمت دراستها</a></li>
-                <li><a href="register_subjects.php" class="nav-link">تنزيل المواد</a></li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="announcements.php">
-              <i class="fas fa-bullhorn"></i>
-              الإعلانات
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="schedule.php">
-              <i class="fas fa-calendar-alt"></i>
-              جدول المحاضرات
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+   
 
     <main class="col-md-9 ms-sm-auto col-lg-10 main-content">
       <h1 class="mb-4">مرحبًا بك، <?= $_SESSION['name'] ?></h1>
@@ -80,7 +124,7 @@ $student_id = $_SESSION['user_id'];
           يوفر لك هذا النظام إمكانية إدارة المواد الدراسية بشكل كامل من حيث تنزيل المواد، متابعة الجدول الدراسي، ومراجعة الدرجات والإعلانات.
         </p>
         <p>
-          يمكنك البدء باستخدام القائمة الجانبية للتنقل بين مختلف أجزاء النظام.
+     
         </p>
       </div>
     </main>

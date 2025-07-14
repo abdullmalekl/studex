@@ -141,7 +141,7 @@ $announcements = $conn->query("
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -161,6 +161,7 @@ $announcements = $conn->query("
             <div class="nav-item">
                 <a href="subjects.php">📖 المواد</a>
             </div>
+            
             <div class="nav-item">
                 <a href="admin_users_management.php">👤 إدارة المستخدمين</a>
             </div>

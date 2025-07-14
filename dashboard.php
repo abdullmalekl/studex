@@ -399,7 +399,7 @@ $groups = $conn->query("SELECT group_id, name FROM Groups");
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item active">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -433,6 +433,60 @@ $groups = $conn->query("SELECT group_id, name FROM Groups");
             </div>
         </div>
     </div>
+    
+        <!-- جدول عرض المحاضرات -->
+        <div class="lectures-container">
+            <h2 class="form-title">📋 جدول المحاضرات</h2>
+            
+            <?php if ($lectures_result && $lectures_result->num_rows > 0): ?>
+                <table class="lectures-table">
+                    <thead>
+                        <tr>
+                            <th>رقم المحاضرة</th>
+                            <th>المادة</th>
+                            <th>الأستاذ</th>
+                            <th>القاعة</th>
+                            <th>المجموعة</th>
+                            <th>الفصل الدراسي</th>
+                            <th>اليوم</th>
+                            <th>وقت البداية</th>
+                            <th>وقت النهاية</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($lecture = $lectures_result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($lecture['lecture_id']) ?></td>
+                                <td><?= htmlspecialchars($lecture['subject_name']) ?></td>
+                                <td><?= htmlspecialchars($lecture['teacher_name']) ?></td>
+                                <td><?= htmlspecialchars($lecture['class_name']) ?></td>
+                                <td><?= htmlspecialchars($lecture['group_name']) ?></td>
+                                <td><?= htmlspecialchars($lecture['semester_name']) ?></td>
+                                <td><?= htmlspecialchars($lecture['day_of_week']) ?></td>
+                                <td><?= htmlspecialchars($lecture['start_time']) ?></td>
+                                <td><?= htmlspecialchars($lecture['end_time']) ?></td>
+                                <td>
+                                    <button class="btn-action btn-edit" onclick="openEditModal(<?= htmlspecialchars(json_encode($lecture)) ?>)">
+                                        ✏️ تعديل
+                                    </button>
+                                    <form method="POST" style="display: inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذه المحاضرة؟')">
+                                        <input type="hidden" name="lecture_id" value="<?= htmlspecialchars($lecture['lecture_id']) ?>">
+                                        <button type="submit" name="delete_lecture" class="btn-action btn-delete">
+                                            🗑️ حذف
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="alert alert-error">لا توجد محاضرات مسجلة حالياً</div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <br>
     <div class="main-content">
         <div class="form-container">
             <h2 class="form-title">📚 إضافة محاضرة جديدة</h2>
@@ -514,58 +568,6 @@ $groups = $conn->query("SELECT group_id, name FROM Groups");
             </form>
         </div>
 
-        <!-- جدول عرض المحاضرات -->
-        <div class="lectures-container">
-            <h2 class="form-title">📋 جدول المحاضرات</h2>
-            
-            <?php if ($lectures_result && $lectures_result->num_rows > 0): ?>
-                <table class="lectures-table">
-                    <thead>
-                        <tr>
-                            <th>رقم المحاضرة</th>
-                            <th>المادة</th>
-                            <th>الأستاذ</th>
-                            <th>القاعة</th>
-                            <th>المجموعة</th>
-                            <th>الفصل الدراسي</th>
-                            <th>اليوم</th>
-                            <th>وقت البداية</th>
-                            <th>وقت النهاية</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($lecture = $lectures_result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($lecture['lecture_id']) ?></td>
-                                <td><?= htmlspecialchars($lecture['subject_name']) ?></td>
-                                <td><?= htmlspecialchars($lecture['teacher_name']) ?></td>
-                                <td><?= htmlspecialchars($lecture['class_name']) ?></td>
-                                <td><?= htmlspecialchars($lecture['group_name']) ?></td>
-                                <td><?= htmlspecialchars($lecture['semester_name']) ?></td>
-                                <td><?= htmlspecialchars($lecture['day_of_week']) ?></td>
-                                <td><?= htmlspecialchars($lecture['start_time']) ?></td>
-                                <td><?= htmlspecialchars($lecture['end_time']) ?></td>
-                                <td>
-                                    <button class="btn-action btn-edit" onclick="openEditModal(<?= htmlspecialchars(json_encode($lecture)) ?>)">
-                                        ✏️ تعديل
-                                    </button>
-                                    <form method="POST" style="display: inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذه المحاضرة؟')">
-                                        <input type="hidden" name="lecture_id" value="<?= htmlspecialchars($lecture['lecture_id']) ?>">
-                                        <button type="submit" name="delete_lecture" class="btn-action btn-delete">
-                                            🗑️ حذف
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="alert alert-error">لا توجد محاضرات مسجلة حالياً</div>
-            <?php endif; ?>
-        </div>
-    </div>
 
     <!-- نافذة تعديل المحاضرة -->
     <div id="editModal" class="modal">

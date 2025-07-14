@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2025 at 07:56 PM
+-- Generation Time: Jul 11, 2025 at 03:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,14 @@ CREATE TABLE `announcements` (
   `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`announcement_id`, `title`, `content`, `created_at`, `teacher_id`, `status`, `deleted`) VALUES
+(4, 'ee', 'eeee', '2025-07-08 18:09:39', 112233, 'active', 0),
+(5, 'segma', 'sense', '2025-07-08 18:11:09', 112233, 'active', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +55,14 @@ CREATE TABLE `classes` (
   `class_id` int(11) NOT NULL,
   `name` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `classes`
+--
+
+INSERT INTO `classes` (`class_id`, `name`) VALUES
+(20, 'الأول'),
+(44, 'احمد سعيد عامر');
 
 -- --------------------------------------------------------
 
@@ -64,7 +80,8 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`department_id`, `name`) VALUES
-(1, 'الحاسب الالي');
+(1, 'الحاسب الالي'),
+(3, 'الأول');
 
 -- --------------------------------------------------------
 
@@ -118,6 +135,18 @@ CREATE TABLE `lectures` (
   `end_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lectures`
+--
+
+INSERT INTO `lectures` (`lecture_id`, `teachr_id`, `sems_id`, `class_id`, `sbjct_id`, `group_id`, `day_of_week`, `start_time`, `end_time`) VALUES
+(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 112233, 2, 20, 3, 1, 'الأحد', '09:01:00', '02:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -135,6 +164,13 @@ CREATE TABLE `results` (
   `total_score` float GENERATED ALWAYS AS (`midterm_grade` + `final_grade`) VIRTUAL,
   `status` varchar(10) GENERATED ALWAYS AS (case when `midterm_grade` + `final_grade` >= 50 then 'pass' else 'fail' end) VIRTUAL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `results`
+--
+
+INSERT INTO `results` (`result_id`, `stdnt_id`, `sbjct_id`, `sem_id`, `tcher_id`, `midterm_grade`, `final_grade`) VALUES
+(1, 22225555, 1, 1, 112233, 30, 60);
 
 -- --------------------------------------------------------
 
@@ -155,9 +191,9 @@ CREATE TABLE `semesters` (
 --
 
 INSERT INTO `semesters` (`semester_id`, `name`, `start_date`, `end_date`, `terms`) VALUES
-(1, 'الأول', '2025-07-07', '2025-07-23', 2),
-(2, 'التاني', '2025-07-15', '2027-11-07', 1),
-(3, 'التالت', '2025-07-16', '2025-07-23', 1);
+(1, '2025', '2025-07-07', '2026-05-23', 2),
+(2, '2027', '2025-07-15', '2027-11-07', 1),
+(3, '2026', '2025-07-16', '2027-10-23', 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +212,7 @@ CREATE TABLE `site_name` (
 --
 
 INSERT INTO `site_name` (`id`, `site_name`, `updated_at`) VALUES
-(1, 'العالي للعلوم والتقنية غريان', '2025-07-07 17:43:05');
+(1, 'المعهد العالي للعلوم والتقنية غريان', '2025-07-08 18:08:51');
 
 -- --------------------------------------------------------
 
@@ -196,6 +232,13 @@ CREATE TABLE `students` (
   `deleted` tinyint(1) DEFAULT 0,
   `dep_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`student_id`, `name`, `password`, `email`, `phone`, `address`, `role`, `status`, `deleted`, `dep_id`) VALUES
+(22225555, 'salem omar', '$2y$10$6w/QvWS2oc7GHciGHQTWWOMrodJRGbg/D6ZmyJ4MRAGwq7gOp1hz.', 's.omar@studex.ly', '0922222221', 'Gharyan', NULL, 'active', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,7 +261,8 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`subject_id`, `name`, `credit_hours`, `units_count`, `status`, `sem_id`, `department_id`) VALUES
-(1, 'رياضة 1', 20, 4, 1, 1, 1);
+(1, 'رياضة 1', 20, 4, 1, 1, 1),
+(3, 'رياضة 2', 30, 4, 0, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -239,6 +283,14 @@ CREATE TABLE `teachers` (
   `deleted` tinyint(1) DEFAULT 0,
   `department_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`teacher_id`, `name`, `specialization`, `email`, `password`, `address`, `phone`, `role`, `status`, `deleted`, `department_id`) VALUES
+(112233, 'ahmed', 'حاسب الي', 'ahmed@studex.ly', '$2y$10$xh4ZVExNGy/q0/J5nbWE7Ov7H7vDKDYoAtwF29yJFZUWQlgNJK54O', 'Gharyan', '0910911216', 'teacher', 'active', 0, NULL),
+(232323, 'احمد سعيد خروف', 'فيزياء', 'saad@studex.ly', '$2y$10$ahstasUQWFJ5Whs.tje9fuG7xGBmqiBJXGlO329VVe2C.HdcFA7Vq', 'gharyan', '0912211223', 'teacher', 'active', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -280,7 +332,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `address`, `phone`) VALUES
-(1, 'raja sh', 'raja@studex.ly', '$2y$10$ZrUepMiJySYoepj0861yw.IoyZ8NccSQA0I92RjMZLnY3gcE0dzAa', 'admin', 'gharyan', '0922222222');
+(1, 'raja she', 'raja@studex.ly', '$2y$10$ZrUepMiJySYoepj0861yw.IoyZ8NccSQA0I92RjMZLnY3gcE0dzAa', 'admin', 'gharyan', '0922222222');
 
 --
 -- Indexes for dumped tables
@@ -400,13 +452,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `enrollment`
@@ -418,13 +470,13 @@ ALTER TABLE `enrollment`
 -- AUTO_INCREMENT for table `lectures`
 --
 ALTER TABLE `lectures`
-  MODIFY `lecture_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lecture_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `results`
 --
 ALTER TABLE `results`
-  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -442,7 +494,7 @@ ALTER TABLE `site_name`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `terms`

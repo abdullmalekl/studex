@@ -149,7 +149,7 @@ $departments = $conn->query("SELECT department_id, name FROM Departments ORDER B
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="dashboard.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 قاعات دراسية</a>

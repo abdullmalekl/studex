@@ -22,7 +22,7 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "teacher") {
             <h4 class="mb-0">مرحباً بك، <?= htmlspecialchars($teacher_name) ?>!</h4>
         </div>
         <div class="nav-item">
-            <a href="home.php">🏠 الصفحة الرئيسية </a>
+            <a href="index.php">🏠 الصفحة الرئيسية </a>
         </div>
         <div class="nav-item">
             <a href="teacher_dashboard.php">⚙️ لوحة التحكم </a>

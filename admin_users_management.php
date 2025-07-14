@@ -167,7 +167,7 @@ $teachers = $conn->query("SELECT teacher_id, name, email, phone, address, specia
     <div class="top-navbar">
         <div class="nav-menu">
             <div class="nav-item">
-                <a href="home.php">🏠 الرئيسية</a>
+                <a href="index.php">🏠 الرئيسية</a>
             </div>
             <div class="nav-item">
                 <a href="dashboard.php">📚 إضافة محاضرة</a>
@@ -204,6 +204,7 @@ $teachers = $conn->query("SELECT teacher_id, name, email, phone, address, specia
 
     <div class="container mt-4">
         <?= $message ?>
+    <br>
         
         <!-- إدارة الطلاب -->
         <div class="card">
